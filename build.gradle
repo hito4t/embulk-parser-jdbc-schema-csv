@@ -1,0 +1,71 @@
+plugins {
+    id 'com.jfrog.bintray' version '1.1'
+    id 'com.github.jruby-gradle.base' version '0.1.5'
+    id 'java'
+}
+import com.github.jrubygradle.JRubyExec
+
+apply plugin: 'java'
+apply plugin: 'com.github.jruby-gradle.base'
+
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+project.version = '0.0.1'
+
+repositories {
+    mavenCentral()
+    jcenter()
+    flatDir {
+    	dirs 'depends'
+    }
+}
+
+configurations {
+    provided
+}
+
+dependencies {
+    compile     'org.embulk:embulk-core:0.6.5'
+    compile     'org.embulk:embulk-standards:0.6.5'
+    provided    'org.embulk:embulk-core:0.6.5'
+    testCompile 'org.embulk:embulk-standards:0.6.5'
+    testCompile 'junit:junit:4.+'
+    testCompile name:'embulk-output-jdbc-0.2.3'
+    testCompile name:'embulk-output-mysql-0.2.3'
+    testCompile name:'mysql-connector-java-5.1.34'
+}
+
+task classpath(type: Copy, dependsOn: ["jar"]) {
+    doFirst { file('classpath').deleteDir() }
+    from (configurations.runtime - configurations.provided + files(jar.archivePath))
+    into 'classpath'
+}
+clean { delete 'classpath' }
+
+task gem(type: JRubyExec, dependsOn: ['build', 'gemspec', 'classpath']) {
+    jrubyArgs '-rrubygems/gem_runner', "-eGem::GemRunner.new.run(ARGV)", 'build'
+    script "build/gemspec"
+    doLast { ant.move(file: "${project.name}-${project.version}.gem", todir: "pkg") }
+}
+
+task gemspec << {
+    file('build').mkdirs();
+    file('build/gemspec').write($/
+Gem::Specification.new do |spec|
+  spec.name          = "${project.name}"
+  spec.version       = "${project.version}"
+  spec.authors       = ["Hitoshi Tanaka"]
+  spec.homepage      = "https://github.com/hito4t/embulk-parser-jdbc-schema-csv"
+  spec.summary       = "Embulk plugin for splitting input file"
+  spec.licenses      = ["Apache 2.0"]
+  spec.files         = `git ls-files`.split("\n").grep(%r"^(?!\.)").grep(%r"^(?!depends/)") + Dir["classpath/*.jar"]
+  spec.test_files    = spec.files.grep(%r"^(test|spec)/")
+  spec.require_paths = ["lib"]
+end
+/$)
+}
+
+
+task gempush << {
+    "gem push pkg/embulk-parser-jdbc-schema-csv-${project.version}.gem".execute().waitFor()
+}

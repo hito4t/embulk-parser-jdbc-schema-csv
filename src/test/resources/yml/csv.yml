@@ -1,6 +1,6 @@
 in:
   type: file
-  path_prefix: '/data/test.csv'
+  path_prefix: 'data/test.csv'
   parser:
     type: csv
     delimiter: ","

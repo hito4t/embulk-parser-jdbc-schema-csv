@@ -1,0 +1,7 @@
+<project name="embulk-parser-jdbc-schema-csv" default="jar" basedir="./">
+  <target name="jar" depends="" description="embulk-parser-jdbc-schema-csv.jarファイルを作成します。">
+    <mkdir dir="${basedir}/jar" />
+    <jar destfile="${basedir}/jar/embulk-parser-jdbc-schema-csv-x.jar" basedir="${basedir}/out/main">
+    </jar>
+  </target>
+</project>

@@ -1,17 +1,19 @@
 package org.embulk.parser;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
+import static org.junit.Assert.assertEquals;
+
 import java.nio.charset.Charset;
 import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.util.List;
 
+import org.embulk.output.MySQLOutputPlugin;
+import org.embulk.spi.OutputPlugin;
 import org.embulk.spi.ParserPlugin;
 import org.embulk.test.EmbulkPluginTester;
+import org.embulk.test.TestExtension;
 import org.junit.Test;
-import static org.junit.Assert.assertEquals;
 
 public class JdbcSchemaCsvParserTest
 {
@@ -30,12 +32,21 @@ create table embulk_test.input_test (
 );
 */
 
-	private static EmbulkPluginTester tester = new EmbulkPluginTester(ParserPlugin.class, "d", JdbcSchemaCsvParser.class);
+	private static EmbulkPluginTester tester = new EmbulkPluginTester(ParserPlugin.class, "jdbc-schema-csv", JdbcSchemaCsvParser.class);
+	static {
+		TestExtension.addPlugin(OutputPlugin.class, "mysql", MySQLOutputPlugin.class);
+	}
 
 	@Test
 	public void testCsv() throws Exception
 	{
-		test("/yml/csv.yml");
+		test("yml/csv.yml");
+	}
+
+	@Test
+	public void testJdbcSchemaCsv() throws Exception
+	{
+		//test("yml/jdbc-csv.yml");
 	}
 
 	private void test(String yml) throws Exception

@@ -26,7 +26,7 @@ public class EmbulkPluginTester {
 	private String convert(String yml) throws Exception
 	{
 		File rootPath = new File(EmbulkPluginTester.class.getResource("/resource.txt").toURI()).getParentFile();
-		File ymlPath = new File(EmbulkPluginTester.class.getResource(yml).toURI());
+		File ymlPath = new File(EmbulkPluginTester.class.getResource("/" + yml).toURI());
 		File tempYmlPath = new File(ymlPath.getParentFile(), "temp-" + ymlPath.getName());
 		Pattern pathPrefixPattern = Pattern.compile("^ *path(_prefix)?: '(.*)'$");
 		try (BufferedReader reader = new BufferedReader(new FileReader(ymlPath))) {

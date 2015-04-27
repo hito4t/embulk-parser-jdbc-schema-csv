@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src/main/java"/>
-	<classpathentry kind="src" path="src/test/resources"/>
-	<classpathentry kind="src" path="src/test/java"/>
+	<classpathentry kind="src" output="out/test" path="src/test/resources"/>
+	<classpathentry kind="src" output="out/test" path="src/test/java"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="lib/embulk-0.6.5.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
-	<classpathentry kind="output" path="bin"/>
+	<classpathentry kind="lib" path="depends/embulk-0.6.5.jar"/>
+	<classpathentry kind="lib" path="depends/embulk-output-jdbc-0.2.3.jar"/>
+	<classpathentry kind="lib" path="depends/embulk-output-mysql-0.2.3.jar"/>
+	<classpathentry kind="lib" path="depends/mysql-connector-java-5.1.34.jar"/>
+	<classpathentry kind="output" path="out/main"/>
 </classpath>

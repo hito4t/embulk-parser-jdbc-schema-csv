@@ -1,0 +1,25 @@
+in:
+  type: file
+  path_prefix: 'data/test.csv'
+  parser:
+    type: jdbc-schema-csv
+    delimiter: ","
+    header_line: false
+    columns:
+    - {name: ID, type: long}
+    - {name: STR, type: string}
+    schema:
+      type: mysql
+      host: localhost
+      database: embulk_test
+      user: embulk_user
+      password: embulk_pass
+      table: input_test
+out:
+  type: file
+  path_prefix: result
+  file_ext: .tsv
+  formatter:
+    type: csv
+    delimiter: "\t"
+    header_line: false
