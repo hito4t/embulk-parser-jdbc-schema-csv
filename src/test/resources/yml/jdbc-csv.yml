@@ -5,9 +5,6 @@ in:
     type: jdbc-schema-csv
     delimiter: ","
     header_line: false
-    columns:
-    - {name: ID, type: long}
-    - {name: STR, type: string}
     schema:
       type: mysql
       host: localhost
@@ -15,7 +12,6 @@ in:
       user: embulk_user
       password: embulk_pass
       table: input_test
-      mode: insert
 out:
   type: file
   path_prefix: result

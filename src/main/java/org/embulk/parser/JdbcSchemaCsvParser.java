@@ -1,6 +1,8 @@
 package org.embulk.parser;
 
 
+import java.util.List;
+
 import org.embulk.config.ConfigSource;
 import org.embulk.config.TaskSource;
 import org.embulk.plugin.PluginType;
@@ -9,6 +11,7 @@ import org.embulk.spi.Exec;
 import org.embulk.spi.ExecSession;
 import org.embulk.spi.InputPlugin;
 import org.embulk.spi.Schema;
+import org.embulk.spi.SchemaConfig;
 import org.embulk.standards.CsvParserPlugin;
 import org.slf4j.Logger;
 
@@ -16,9 +19,18 @@ public class JdbcSchemaCsvParser extends CsvParserPlugin
 {
     private final Logger logger = Exec.getLogger(JdbcSchemaCsvParser.class);
 
+    public static interface PluginTask extends CsvParserPlugin.PluginTask
+    {
+    	@Override
+    	public SchemaConfig getSchemaConfig();
+
+    }
+
 	@Override
 	public void transaction(ConfigSource config, final Control control)
 	{
+		// to avoid config error
+		config.set("columns", java.util.Collections.emptyList());
 		ExecSession session = Exec.session();
 		ConfigSource child = config.getNested("schema");
 		String type = child.get(String.class, "type");
