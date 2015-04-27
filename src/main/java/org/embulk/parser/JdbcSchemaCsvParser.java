@@ -1,40 +1,37 @@
 package org.embulk.parser;
 
 import org.embulk.config.ConfigSource;
+import org.embulk.config.TaskSource;
 import org.embulk.plugin.PluginType;
 import org.embulk.spi.Exec;
 import org.embulk.spi.ExecSession;
 import org.embulk.spi.OutputPlugin;
+import org.embulk.spi.Schema;
 import org.embulk.standards.CsvParserPlugin;
 
-public class JdbcSchemaCsvParser extends CsvParserPlugin {
-
+public class JdbcSchemaCsvParser extends CsvParserPlugin
+{
 	@Override
-	public void transaction(ConfigSource config, Control control) {
+	public void transaction(ConfigSource config, final Control control)
+	{
 		ExecSession session = Exec.session();
-		String type = config.get(String.class, "type");
 		ConfigSource child = config.getNested("schema");
-		String type2 = child.get(String.class, "type");
-		OutputPlugin o = session.newPlugin(OutputPlugin.class, new PluginType(type2));
-
-		System.out.println(o);
-		/*
-		//config.
-		//o.transaction(config, null, 0, null);
+		String type = child.get(String.class, "type");
+		OutputPlugin output = session.newPlugin(OutputPlugin.class, new PluginType(type));
 
 		try {
-			new Helper().getSchema(config);
-		} catch (SQLException e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
+			JdbcOutputPluginHelper helper = new JdbcOutputPluginHelper(output);
+			final Schema schemaFromJdbc = helper.getSchema(child);
+			super.transaction(config, new Control() {
+				@Override
+				public void run(TaskSource taskSource, Schema schema) {
+					control.run(taskSource, schemaFromJdbc);
+				}
+			});
+
+		} catch (Exception e) {
+			throw new RuntimeException(e);
 		}
-		*/
-
-
-		//control.
-		// TODO 自動生成されたメソッド・スタブ
-		// TODO 自動生成されたメソッド・スタブ
-		super.transaction(config, control);
 	}
 
 }

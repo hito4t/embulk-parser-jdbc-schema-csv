@@ -15,6 +15,7 @@ in:
       user: embulk_user
       password: embulk_pass
       table: input_test
+      mode: insert
 out:
   type: file
   path_prefix: result

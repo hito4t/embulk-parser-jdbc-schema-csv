@@ -25,9 +25,9 @@ create table embulk_test;
 grant all on embulk_test.* to embulk_user@"%" identified by 'embulk_pass';
 
 create table embulk_test.input_test (
-    id        int,
+    id        bigint,
     name      char(4),
-    value     decimal(8, 2),
+    value     double,
     creation  timestamp
 );
 */
@@ -46,7 +46,7 @@ create table embulk_test.input_test (
 	@Test
 	public void testJdbcSchemaCsv() throws Exception
 	{
-		//test("yml/jdbc-csv.yml");
+		test("yml/jdbc-csv.yml");
 	}
 
 	private void test(String yml) throws Exception
