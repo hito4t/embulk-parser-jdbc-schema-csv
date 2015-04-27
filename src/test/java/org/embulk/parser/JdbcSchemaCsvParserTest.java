@@ -26,7 +26,7 @@ grant all on embulk_test.* to embulk_user@"%" identified by 'embulk_pass';
 
 create table embulk_test.input_test (
     id        bigint,
-    name      char(4),
+    name      char(8),
     value     double,
     creation  timestamp
 );
