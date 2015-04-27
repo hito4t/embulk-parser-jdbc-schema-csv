@@ -27,6 +27,8 @@ configurations {
 dependencies {
     compile     'org.embulk:embulk-core:0.6.5'
     compile     'org.embulk:embulk-standards:0.6.5'
+    provided    'org.embulk:embulk-core:0.6.5'
+    provided    'org.embulk:embulk-standards:0.6.5'
     testCompile 'junit:junit:4.+'
     testCompile name:'embulk-input-jdbc-0.4.0'
     testCompile name:'embulk-input-mysql-0.4.0'
