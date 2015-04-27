@@ -8,8 +8,8 @@ import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.util.List;
 
-import org.embulk.output.MySQLOutputPlugin;
-import org.embulk.spi.OutputPlugin;
+import org.embulk.input.MySQLInputPlugin;
+import org.embulk.spi.InputPlugin;
 import org.embulk.spi.ParserPlugin;
 import org.embulk.test.EmbulkPluginTester;
 import org.embulk.test.TestExtension;
@@ -34,7 +34,7 @@ create table embulk_test.input_test (
 
 	private static EmbulkPluginTester tester = new EmbulkPluginTester(ParserPlugin.class, "jdbc-schema-csv", JdbcSchemaCsvParser.class);
 	static {
-		TestExtension.addPlugin(OutputPlugin.class, "mysql", MySQLOutputPlugin.class);
+		TestExtension.addPlugin(InputPlugin.class, "mysql", MySQLInputPlugin.class);
 	}
 
 	@Test

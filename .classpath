@@ -6,8 +6,8 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="lib" path="depends/embulk-0.6.5.jar"/>
-	<classpathentry kind="lib" path="depends/embulk-output-jdbc-0.2.3.jar"/>
-	<classpathentry kind="lib" path="depends/embulk-output-mysql-0.2.3.jar"/>
 	<classpathentry kind="lib" path="depends/mysql-connector-java-5.1.34.jar"/>
+	<classpathentry kind="lib" path="depends/embulk-input-jdbc-0.4.0.jar"/>
+	<classpathentry kind="lib" path="depends/embulk-input-mysql-0.4.0.jar"/>
 	<classpathentry kind="output" path="out/main"/>
 </classpath>

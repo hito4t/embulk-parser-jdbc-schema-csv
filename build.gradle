@@ -27,11 +27,9 @@ configurations {
 dependencies {
     compile     'org.embulk:embulk-core:0.6.5'
     compile     'org.embulk:embulk-standards:0.6.5'
-    provided    'org.embulk:embulk-core:0.6.5'
-    testCompile 'org.embulk:embulk-standards:0.6.5'
     testCompile 'junit:junit:4.+'
-    testCompile name:'embulk-output-jdbc-0.2.3'
-    testCompile name:'embulk-output-mysql-0.2.3'
+    testCompile name:'embulk-input-jdbc-0.4.0'
+    testCompile name:'embulk-input-mysql-0.4.0'
     testCompile name:'mysql-connector-java-5.1.34'
 }
 
