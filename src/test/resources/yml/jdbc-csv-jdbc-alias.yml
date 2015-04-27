@@ -1,0 +1,16 @@
+in:
+  type: file
+  path_prefix: 'data/test.csv'
+  parser:
+    type: jdbc-schema-csv
+    delimiter: ","
+    header_line: false
+    schema: &OUT
+      type: mysql
+      host: localhost
+      database: embulk_test
+      user: embulk_user
+      password: embulk_pass
+      table: input_test
+      mode:  insert
+out: *OUT
